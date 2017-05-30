@@ -1,0 +1,9 @@
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\bin\Debug\OrderManager.exe.config
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\bin\Debug\OrderManager.exe
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\bin\Debug\OrderManager.pdb
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.csprojResolveAssemblyReference.cache
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.Properties.Resources.resources
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.csproj.GenerateResource.Cache
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.exe
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.pdb
+D:\my-study\course\DataBase\expriment\DB-lab3\OrderManager\OrderManager\obj\Debug\OrderManager.Form1.resources
