@@ -66,24 +66,82 @@ namespace OrderManager
             da.Fill(dt);  //查询结果记录在数据表中
             this.dataGridView1.DataSource = dt;
             this.dataGridView1.Columns[0].ReadOnly = true;
-
+            addButtonCol(this.dataGridView1);
             this.dataGridView1.Update();
         }
-
-        //修改客户信息
-        private void CustomerCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        //添加两列button，分别对应更新和删除操作
+        private void addButtonCol(DataGridView e)
         {
-            String comStr = "update Customer set " + customer[e.ColumnIndex] + " = '"
-                + ((DataGridView)sender)[e.ColumnIndex,e.RowIndex].Value + "' where customerNo = '"
-                + ((DataGridView)sender)[0,e.RowIndex].Value + "'";
-            SqlCommand com = new SqlCommand(comStr,con);
+            for (int i = 0; i < e.Columns.Count; i++ )
+                if (e.Columns[i] is DataGridViewButtonColumn)
+                {
+                    e.Columns.RemoveAt(i);
+                    e.Columns.RemoveAt(i);
+                    break;
+                }
+            DataGridViewButtonColumn button_update_Col = new DataGridViewButtonColumn();
+            button_update_Col.Name = "ButtonUpdate";
+            button_update_Col.Text = "更新";
+            button_update_Col.ReadOnly = true;
+            button_update_Col.Width = 80;
+            e.Columns.Add(button_update_Col);
+            for (int i = 0; i < e.Rows.Count; i++)
+                e.Rows[i].Cells["ButtonUpdate"].Value = "更新";
+            DataGridViewButtonColumn button_del_Col = new DataGridViewButtonColumn();
+            button_del_Col.Name = "ButtonDel";
+            button_del_Col.Text = "删除";
+            button_del_Col.ReadOnly = true;
+            button_del_Col.Width = 80;
+            e.Columns.Add(button_del_Col);
+            for (int i = 0; i < e.Rows.Count; i++)
+                e.Rows[i].Cells["ButtonDel"].Value = "删除";
+        }
+
+        //修改、删除客户信息
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
             try
             {
-                com.ExecuteNonQuery();
+                if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex > -1)
+                {
+                    int row = e.RowIndex;
+                    if (this.dataGridView1.CurrentCell.Value.ToString() == "更新")
+                    {                        
+                        String sql = "update Customer set ";
+                        for (int i = 1; i < customer.Length; i++)
+                            sql += customer[i] + " = '" + this.dataGridView1[i, row].Value + "', "; 
+                        sql = sql.Substring(0, sql.Length - 2);
+                        sql += " where customerNo = '" + this.dataGridView1[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("更新成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("输入信息格式错误，更新失败");
+                        }
+                    }
+                    else
+                    {
+                        String sql = "delete from Customer where customerNo = '" + this.dataGridView1[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("删除成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("与该客户还有订单关系，故不能删除该客户");
+                        }
+                    }
+                }
             }
-            catch
+            catch 
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("操作错误");
             }
         }
 
@@ -123,6 +181,7 @@ namespace OrderManager
                 da.Fill(dt);
                 this.dataGridView2.DataSource = dt;
                 this.dataGridView2.Columns[0].ReadOnly = true;
+                addButtonCol(this.dataGridView2);
                 this.dataGridView2.Update();
             }
             catch
@@ -131,20 +190,51 @@ namespace OrderManager
             }
         }
 
-        //修改员工信息
-        private void EmployeeCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        //修改、删除员工信息
+        private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            String comStr = "update Employee set " + employee[e.ColumnIndex] + " = '"
-                + ((DataGridView)sender)[e.ColumnIndex, e.RowIndex].Value + "' where employeeNo = '"
-                + ((DataGridView)sender)[0, e.RowIndex].Value + "'";
-            SqlCommand com = new SqlCommand(comStr, con);
             try
             {
-                com.ExecuteNonQuery();
+                if (dataGridView2.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex > -1)
+                {
+                    int row = e.RowIndex;
+                    if (this.dataGridView2.CurrentCell.Value.ToString() == "更新")
+                    {
+                        String sql = "update Employee set ";
+                        for (int i = 1; i < employee.Length; i++)
+                            sql += employee[i] + " = '" + this.dataGridView2[i, row].Value + "', ";
+                        sql = sql.Substring(0, sql.Length - 2);
+                        sql += " where employeeNo = '" + this.dataGridView2[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("更新成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("输入信息格式错误，更新失败");
+                        }
+                    }
+                    else
+                    {
+                        String sql = "delete from Employee where employeeNo = '" + this.dataGridView2[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("删除成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("与该员工还有订单关系，故不能删除该员工");
+                        }
+                    }
+                }
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("操作错误");
             }
         }
 
@@ -173,6 +263,7 @@ namespace OrderManager
                 da.Fill(dt);
                 this.dataGridView3.DataSource = dt;
                 this.dataGridView3.Columns[0].ReadOnly = true;
+                addButtonCol(this.dataGridView3);
                 this.dataGridView3.Update();
             }
             catch
@@ -181,20 +272,51 @@ namespace OrderManager
             }
         }
 
-        //修改产品信息
-        private void ProductCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        //修改、删除员工信息
+        private void DataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            String comStr = "update Product set " + product[e.ColumnIndex] + " = '"
-                + ((DataGridView)sender)[e.ColumnIndex, e.RowIndex].Value + "' where productNo = '"
-                + ((DataGridView)sender)[0, e.RowIndex].Value + "'";
-            SqlCommand com = new SqlCommand(comStr, con);
             try
             {
-                com.ExecuteNonQuery();
+                if (dataGridView3.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex > -1)
+                {
+                    int row = e.RowIndex;
+                    if (this.dataGridView3.CurrentCell.Value.ToString() == "更新")
+                    {
+                        String sql = "update Product set ";
+                        for (int i = 1; i < product.Length; i++)
+                            sql += product[i] + " = '" + this.dataGridView3[i, row].Value + "', ";
+                        sql = sql.Substring(0, sql.Length - 2);
+                        sql += " where productNo = '" + this.dataGridView3[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("更新成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("输入信息格式错误，更新失败");
+                        }
+                    }
+                    else
+                    {
+                        String sql = "delete from Product where productNo = '" + this.dataGridView3[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("删除成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("与该产品还有订单关系，故不能删除该产品");
+                        }
+                    }
+                }
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("操作错误");
             }
         }
 
@@ -545,5 +667,6 @@ namespace OrderManager
             st.Commit();
             MessageBox.Show("新建订单成功");
         }
+
     }
 }

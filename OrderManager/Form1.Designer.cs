@@ -276,7 +276,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(430, 115);
+            this.button5.Location = new System.Drawing.Point(504, 134);
             this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(119, 40);
@@ -287,7 +287,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(244, 115);
+            this.button1.Location = new System.Drawing.Point(290, 134);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 40);
@@ -300,7 +300,7 @@
             // 
             this.panel6.Controls.Add(this.textBox5);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(357, 52);
+            this.panel6.Location = new System.Drawing.Point(357, 72);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(244, 41);
@@ -328,7 +328,7 @@
             // 
             this.panel5.Controls.Add(this.textBox4);
             this.panel5.Controls.Add(this.label4);
-            this.panel5.Location = new System.Drawing.Point(16, 52);
+            this.panel5.Location = new System.Drawing.Point(33, 72);
             this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(244, 41);
@@ -356,7 +356,7 @@
             // 
             this.panel4.Controls.Add(this.textBox3);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Location = new System.Drawing.Point(691, 4);
+            this.panel4.Location = new System.Drawing.Point(687, 9);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(244, 41);
@@ -384,7 +384,7 @@
             // 
             this.panel3.Controls.Add(this.textBox2);
             this.panel3.Controls.Add(this.label2);
-            this.panel3.Location = new System.Drawing.Point(357, 0);
+            this.panel3.Location = new System.Drawing.Point(357, 9);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(244, 41);
@@ -412,7 +412,7 @@
             // 
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(16, 4);
+            this.panel2.Location = new System.Drawing.Point(33, 9);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(244, 41);
@@ -441,18 +441,16 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(8, 252);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView1.Location = new System.Drawing.Point(4, 216);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1003, 378);
+            this.dataGridView1.Size = new System.Drawing.Size(1014, 422);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CustomerCellEndEdit);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellClick);
             // 
             // t1
             // 
@@ -797,18 +795,16 @@
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(8, 285);
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView2.Location = new System.Drawing.Point(4, 285);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(1006, 353);
+            this.dataGridView2.Size = new System.Drawing.Size(1014, 353);
             this.dataGridView2.TabIndex = 2;
-            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.EmployeeCellEndEdit);
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView2_CellClick);
             // 
             // t2
             // 
@@ -1018,7 +1014,7 @@
             this.dataGridView3.RowTemplate.Height = 23;
             this.dataGridView3.Size = new System.Drawing.Size(999, 348);
             this.dataGridView3.TabIndex = 4;
-            this.dataGridView3.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductCellEndEdit);
+            this.dataGridView3.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView3_CellClick);
             // 
             // t3
             // 
