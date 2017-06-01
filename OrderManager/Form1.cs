@@ -36,7 +36,7 @@ namespace OrderManager
             return s != "" ? "'" + s + "'" : "NULL";
         }
 
-        //释放资源
+        //释放资源 
         private void DataRelease(object sender, FormClosedEventArgs e)
         {
             con.Close();
@@ -62,12 +62,19 @@ namespace OrderManager
                 comStr = comStr.Substring(0, comStr.Length - 4);
             }
             SqlDataAdapter da = new SqlDataAdapter(comStr, con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);  //查询结果记录在数据表中
-            this.dataGridView1.DataSource = dt;
-            this.dataGridView1.Columns[0].ReadOnly = true;
-            addButtonCol(this.dataGridView1);
-            this.dataGridView1.Update();
+            DataTable dt = new DataTable();  
+            try
+            {
+                da.Fill(dt);
+                this.dataGridView1.DataSource = dt;
+                this.dataGridView1.Columns[0].ReadOnly = true;
+                addButtonCol(this.dataGridView1);
+                this.dataGridView1.Update();
+            }
+            catch
+            {
+                MessageBox.Show("查询信息格式错误");
+            }
         }
         //添加两列button，分别对应更新和删除操作
         private void addButtonCol(DataGridView e)
@@ -186,7 +193,7 @@ namespace OrderManager
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("查询信息格式错误");
             }
         }
 
@@ -268,7 +275,7 @@ namespace OrderManager
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("查询信息格式错误");
             }
         }
 
@@ -350,10 +357,56 @@ namespace OrderManager
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("查询信息格式错误");
             }
         }
-
+        //修改、删除订单信息
+        private void DataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dataGridView4.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex > -1)
+                {
+                    int row = e.RowIndex;
+                    if (this.dataGridView3.CurrentCell.Value.ToString() == "更新")
+                    {
+                        String sql = "update Product set ";
+                        for (int i = 1; i < product.Length; i++)
+                            sql += product[i] + " = '" + this.dataGridView3[i, row].Value + "', ";
+                        sql = sql.Substring(0, sql.Length - 2);
+                        sql += " where productNo = '" + this.dataGridView3[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("更新成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("输入信息格式错误，更新失败");
+                        }
+                    }
+                    else
+                    {
+                        String sql = "delete from Product where productNo = '" + this.dataGridView3[0, row].Value + "'";
+                        SqlCommand com = new SqlCommand(sql, con);
+                        try
+                        {
+                            com.ExecuteNonQuery();
+                            MessageBox.Show("删除成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("与该产品还有订单关系，故不能删除该产品");
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("操作错误");
+            }
+        }
         //新增客户
         private void button5_Click(object sender, EventArgs e)
         {
@@ -424,9 +477,8 @@ namespace OrderManager
         }
 
         //级联删除订单
-        private void OrderDelete(object sender, EventArgs e)
+        private void OrderDelete(String orderNo)
         {
-            String orderNo = dataGridView4[0, dataGridView4.SelectedCells[0].RowIndex].Value + "";
             String comStr1 = "delete from OrderDetail where OrderNo = '" + orderNo + "'";
             String comStr2 = "delete from OrderMaster where OrderNo = '" + orderNo + "'";
             SqlTransaction st = con.BeginTransaction();  //开启事务
@@ -507,7 +559,7 @@ namespace OrderManager
             }
             catch
             {
-                MessageBox.Show("格式错误");
+                MessageBox.Show("查询信息格式错误");
             }
         }
 
